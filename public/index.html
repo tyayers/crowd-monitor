@@ -64,11 +64,11 @@
           <div class="col-12 col-md-10 d-none d-xl-block">
             <nav class="site-navigation position-relative text-right" role="navigation">
               <ul class="site-menu js-clone-nav mx-auto d-none d-lg-block">
-                <li><a href="#section-home" class="nav-link">Home</a></li>
-                <li><a href="#section-map" class="nav-link">Security Map</a></li>
-                <li><a href="#section-how-it-works" class="nav-link">How It Works</a></li>
-                <li><a href="#" class="nav-link">Developer Portal</a></li>
-                <li><a href="#" class="nav-link">Airline App</a></li>
+                <li><a href="#section-home" class="nav-link js-menu-hide">Home</a></li>
+                <li><a href="#section-map" class="nav-link js-menu-hide">Security Map</a></li>
+                <li><a href="#section-how-it-works" class="nav-link js-menu-hide">How It Works</a></li>
+                <li><a href="#" class="nav-link js-menu-hide">Developer Portal</a></li>
+                <li><a href="#" class="nav-link js-menu-hide">Airline App</a></li>
                 <!-- <li class="has-children">
                   <a href="#section-about" class="nav-link">About Us</a>
                   <ul class="dropdown">
@@ -76,7 +76,7 @@
                     <li><a href="#section-our-team" class="nav-link">Our Team</a></li>
                   </ul>
                 </li> -->
-                <li><a data-toggle="modal" data-target="#settings-modal" class="nav-link js-menu-toggle">Settings</a></li>
+                <li><a data-toggle="modal" data-target="#settings-modal" class="nav-link js-menu-hide">Settings</a></li>
                 <!-- <li><a href="#section-industries" class="nav-link">Industries</a></li> -->
               </ul>
             </nav>
@@ -117,14 +117,9 @@
             </div>               
 
             <h1 class="text-white font-weight-light text-uppercase font-weight-bold" data-aos="fade-up">Real-time Dashboard</h1>
-
-            <!-- <p data-aos="fade-up" data-aos-delay="200"><a href="https://free-template.co" class="btn btn-primary py-3 px-5 text-white">Get Started!</a></p> -->
-
+            <h3 id="status-label" class="text-white font-weight-light text-uppercase font-weight-bold" data-aos="fade-up"></h3>
           </div>
-
         </div>
-
-        <p id="status-label" class="mb-5" style="position: fixed; bottom: 5px; font-weight: bold; margin-left: auto; maring-right: auto;"></p>
       </div>
     </div>  
 
@@ -132,7 +127,7 @@
       <div class="container">
         
         <div class="row mb-5">
-          <div class="col-md-12">
+          <div class="col-md-12" style="text-align: center;">
               <div class="text-left pb-1 border-primary mb-4">
                   <h2 class="text-primary">Security Checkpoints</h2>
                 </div>  
@@ -175,16 +170,16 @@
               <input id="ml-switch" type="checkbox" class="custom-control-input">
               <label class="custom-control-label" for="ml-switch">Use Google AutoML</label>
             </div> -->
+            <div class="custom-control custom-switch">
+              <input id="offline-switch" type="checkbox" class="custom-control-input">
+              <label class="custom-control-label" for="offline-switch">Test Mode - use test data for vision service</label>
+            </div>  
+            <br>
             <label for="vision-select">AI Vision Service</label>
             <select class="form-control" id="vision-select">
               <option>Google Cloud Vision API</option>
               <option>Google Cloud AutoML - Airport Security Dataset</option>
             </select>
-            <br>
-            <div class="custom-control custom-switch">
-              <input id="offline-switch" type="checkbox" class="custom-control-input">
-              <label class="custom-control-label" for="offline-switch">Test Mode - use test data for vision service</label>
-            </div>  
             <br>
             <div>
               <label for="checkpointLabel">Security Checkpoint Id</label>
