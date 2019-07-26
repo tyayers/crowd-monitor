@@ -1,0 +1,125 @@
+<html>
+    <head>
+        <title>Airline App</title>
+
+        <!-- update the version number as needed -->
+        <script defer src="/__/firebase/6.2.4/firebase-app.js"></script>
+        <!-- include only the Firebase features as you need -->
+        <script defer src="/__/firebase/6.2.4/firebase-auth.js"></script>
+        <script defer src="/__/firebase/6.2.4/firebase-firestore.js"></script>
+        <script defer src="/__/firebase/6.2.4/firebase-messaging.js"></script>
+        <script defer src="/__/firebase/6.2.4/firebase-storage.js"></script>
+        <script defer src="/__/firebase/6.2.4/firebase-functions.js"></script>
+        <!-- initialize the SDK after all desired features are loaded -->
+        <script defer src="/__/firebase/init.js"></script>
+
+        <link rel="manifest" href="/manifest.json">
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/push.js/0.0.11/push.min.js"></script>
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <meta name="theme-color" content="white"/>
+
+        <link rel="icon" href="favicon.ico" type="image/x-icon" />  
+        <link rel="apple-touch-icon" href="images/airport-icon.png">   
+        <meta name="theme-color" content="white"/>  
+        <meta name="apple-mobile-web-app-capable" content="yes">  
+        <meta name="apple-mobile-web-app-status-bar-style" content="black"> 
+        <meta name="apple-mobile-web-app-title" content="Delta App"> 
+        <meta name="msapplication-TileImage" content="images/hello-icon-144.png">  
+        <meta name="msapplication-TileColor" content="#FFFFFF">
+
+        <style>
+        /* Make content area fill the entire browser window */
+        html,
+        .fullscreen {
+            display: flex;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+        }
+        </style>
+
+    </head>
+    <body>
+
+        <div id="boarding-pass" onclick="fullscreen();">
+        <img src="images/boarding-pass.jpg">
+
+        <span id="queue-warning" style="display: none; position: fixed; left: 20px; top: 320px; font-size: 14px;" class="badge badge-danger">AIRPORT QUEUE WARNING: long queues expected!</span>
+    </div>
+        <script src="js/jquery-3.3.1.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+
+        <script>
+            var queue = "low";
+
+            function fullscreen() {
+                document.querySelector("#boarding-pass").requestFullscreen();
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+                // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+                // // The Firebase SDK is initialized and available here!
+                //
+                // firebase.auth().onAuthStateChanged(user => { });
+                // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
+                // firebase.messaging().requestPermission().then(() => { });
+                // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
+                //
+                // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+        
+                try {
+                    let app = firebase.app();
+                    let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
+                    // document.getElementById('load').innerHTML = `Firebase SDK loaded with ${features.join(', ')}`;
+
+                    Push.Permission.request();
+                    var db = firebase.firestore();
+
+                    db.collection("security").doc("1")
+                    .onSnapshot(function(doc) {
+                        console.log("Current data: ", doc.data());
+
+                        if (doc.data().queue == "high"){
+
+                            queue = doc.data().queue;
+                            Push.create('AIRPORT LONG QUEUE', {
+                                body: 'Expect a long queue at the airport today, so get there extra early.',
+                                icon: 'images/airport-icon-warning.png',
+                                timeout: 8000,               // Timeout before notification closes automatically.
+                                vibrate: [100, 100, 100],    // An array of vibration pulses for mobile devices.
+                                onClick: function() {
+                                    // Callback for when the notification is clicked. 
+                                    console.log(this);
+                                }  
+                            });
+
+                            $("#queue-warning").fadeIn();
+                        }
+                        else if (queue == "high") {
+                            queue = doc.data().queue;
+                            Push.create('AIRPORT queue shortened', {
+                                body: "AIRPORT queue has shortened, you're in luck, little waiting expected.",
+                                icon: 'images/airport-icon.png',
+                                timeout: 8000,               // Timeout before notification closes automatically.
+                                vibrate: [100, 100, 100],    // An array of vibration pulses for mobile devices.
+                                onClick: function() {
+                                    // Callback for when the notification is clicked. 
+                                    console.log(this);
+                                }  
+                            });  
+
+                            $("#queue-warning").fadeOut();
+                        }
+                    });
+                } catch (e) {
+                console.error(e);
+                // document.getElementById('load').innerHTML = 'Error loading the Firebase SDK, check the console.';
+                }
+            });
+         </script> 
+            
+    </body>
+
+</html>
