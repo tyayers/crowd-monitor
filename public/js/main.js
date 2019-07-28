@@ -10,9 +10,9 @@ jQuery(document).ready(function($) {
    var iotRunning = false;
    var iotstream = undefined;
    var visionService = 0; // 0=google vision, 1=auto ml
-   var checkpointId = localStorage.getItem('checkpointId');
    var imageType = "";
 
+   var checkpointId = localStorage.getItem('checkpointId');
    if (checkpointId == undefined) {
 	   checkpointId = Math.floor(Math.random() * 10000);
 	   localStorage.setItem('checkpointId', checkpointId);
@@ -80,19 +80,19 @@ jQuery(document).ready(function($) {
 
    $(".test-image-select").click(function() {
 
-	   var imageSrc = $(this).children("img").prop("src");
-	   if (imageSrc.includes("crowd") || imageSrc.includes("moderate"))
-		   imageType = "CROWD";
-	   else
-		   imageType = "LOW";
+		var imageSrc = $(this).children("img").prop("src");
+		if (imageSrc.includes("crowd") || imageSrc.includes("moderate"))
+			imageType = "CROWD";
+		else
+			imageType = "LOW";
 
-	   $('#pictures-modal').modal('hide')
-	   $("#videoElement").prop("poster", )
+		$('#pictures-modal').modal('hide')
+		//$("#videoElement").prop("poster", imageSrc)
 
-   var img = new Image();
-   img.onload = draw;
-   img.onerror = failed;
-	   img.src = $(this).children("img").prop("src");	
+		var img = new Image();
+		img.onload = draw;
+		img.onerror = failed;
+		img.src = imageSrc;	
    });
 
    // Here we have a timer checking if we have new camera frames, and if yes processing them
@@ -134,39 +134,39 @@ jQuery(document).ready(function($) {
    }
 
    function callSecurityVisionService() {
-	   var visionEngine = "cloudvision";
-	   if (visionService == 1) visionEngine = "amlvision";
+		var visionEngine = "cloudvision";
+		if (visionService == 1) visionEngine = "amlvision";
 
-   const url = 'https://us-central1-airport-security.cloudfunctions.net/security/vision?engine=' + visionEngine;
-   const img = canvas.toDataURL('image/jpeg', 0.5).split(',')[1];
-   const payload = { 
-	   "requests": [
-	   { "image": { "content": img}, "features": [ { "type": "LABEL_DETECTION"}] }
-   ]};
+		const url = 'https://us-central1-airport-security.cloudfunctions.net/security/vision?engine=' + visionEngine;
+		const img = canvas.toDataURL('image/jpeg', 0.5).split(',')[1];
+		const payload = { 
+			"requests": [
+			{ "image": { "content": img}, "features": [ { "type": "LABEL_DETECTION"}] }
+		]};
 
-	   var data = JSON.stringify(payload);
-	   if (document.getElementById("offline-switch").checked) {
-		   var testData = "testdata/vision-crowd.json";
-		   if (imageType == "LOW")
-			   testData = "testdata/vision-low.json";
+		var data = JSON.stringify(payload);
+		if (document.getElementById("offline-switch").checked) {
+			var testData = "testdata/vision-crowd.json";
+			if (imageType == "LOW")
+				testData = "testdata/vision-low.json";
 
-		   $.get(testData, function(data) {
-			   evaluateVisionResult(data);
-		   });
-	   }
-	   else {
-		   $.ajax({
-			   type: "POST",
-			   url: url,
-			   headers: {
-					   "Content-Type": "application/json"
-			   },        
-			   data: JSON.stringify(payload),
-			   success: function(data) {
-				   evaluateVisionResult(JSON.parse(data));		
-			   }
-		   });
-	   }
+			$.get(testData, function(data) {
+				evaluateVisionResult(data);
+			});
+		}
+		else {
+			$.ajax({
+				type: "POST",
+				url: url,
+				headers: {
+						"Content-Type": "application/json"
+				},        
+				data: JSON.stringify(payload),
+				success: function(data) {
+					evaluateVisionResult(JSON.parse(data));		
+				}
+			});
+		}
    }
 
    function evaluateVisionResult(data) {

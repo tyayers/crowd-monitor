@@ -109,6 +109,7 @@ app.put('/checkpoint/:checkpointId/status/:queueStatus', (req, res) => {
 
 app.get('/checkpoint/:checkpointId/status', (req, res) => {
   const cId = req.params.checkpointId;
+
   var result = { 
     checkpointId: cId,
     status: "unknown"  
@@ -117,20 +118,19 @@ app.get('/checkpoint/:checkpointId/status', (req, res) => {
   var db = admin.firestore();
   db.collection("security").doc(cId).get().then(function(doc) {
     if (doc.exists) {
-      //console.log("doc: " + JSON.stringify(doc.data()));
       result.status = doc.data().status;
+      res.end(JSON.stringify(result));
     }
     else {
-      console.error("No queue stats found for checkpoint " + cId);
       result.error = "checkpoint " + cId + " not found!";
+      res.end(JSON.stringify(result));
     }
   })
   .catch(function(error) {
     result.error = error;
     console.error("Error reading document: ", error);
+    res.end(JSON.stringify(result));
   });		
-
-  res.end(JSON.stringify(result));
 });
 
 // callCloudVision calls the Google Cloud Vision API using the request-promise library
