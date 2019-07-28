@@ -3,12 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <title>Alitalia App</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
-<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:100,300,400'>
-<link rel="stylesheet" href="./css/style-airline.css">
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/push.js/0.0.11/push.min.js"></script>
-<!-- <link rel="stylesheet" href="css/bootstrap.min.css"> -->
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:100,300,400'>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="./css/style-airline.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/push.js/0.0.11/push.min.js"></script>
 </head>
 <body>
 <!-- partial:index.partial.html -->
@@ -91,8 +94,14 @@
       <use xlink:href="#qrcode"></use>
     </svg>
   </section>
-  <div id="queue-warning" style="display: none; text-align: center; font-size: 14px;" class="badge badge-danger">AIRPORT QUEUE WARNING: long queues expected!</div>
 
+  <div id="queue-warning" class="alert alert-danger" role="alert" style="display: none;">
+    AIRPORT WARNING: long queues expected!
+  </div>
+
+  <div id="queue-normal" class="alert alert-success" role="alert" style="display: none;">  
+    Airport info: low wait time expected
+  </div>
 </div>
 
 

@@ -1,7 +1,7 @@
 jQuery(document).ready(function($) {
  
     var checkpointId = localStorage.getItem('checkpointId');
-    var queueStatus = "low";
+    var queueStatus = "";
     if (checkpointId == undefined) {
         checkpointId = Math.floor(Math.random() * 10000);
         localStorage.setItem('checkpointId', checkpointId);
@@ -36,6 +36,7 @@ jQuery(document).ready(function($) {
                             }  
                         });
 
+                        $("#queue-normal").fadeOut();
                         $("#queue-warning").fadeIn();
                     }
                     else {
@@ -50,7 +51,8 @@ jQuery(document).ready(function($) {
                             }  
                         });  
 
-                        $("#queue-warning").fadeOut();                 
+                        $("#queue-warning").fadeOut();    
+                        $("#queue-normal").fadeIn();             
                     }
                 }
             }

@@ -1,10 +1,19 @@
 /* Base */
 
 .pulse {
-  animation: pulse 2s infinite;
+  -webkit-animation-name: redPulse;
+  -webkit-animation-duration: 2s;
+  -webkit-animation-iteration-count: infinite;
 }
-.pulse:hover {
-  animation: none;
+
+@-webkit-keyframes redPulse {
+  from { background-color: #f8d7da; -webkit-box-shadow: 0 0 0px #f8d7da; }
+  50% { background-color: #ff8e97; -webkit-box-shadow: 0 0 18px #ff8e97; }
+  to { background-color: #f8d7da; -webkit-box-shadow: 0 0 0px #f8d7da; }
+}
+
+/* .pulse {
+  animation: pulse 2s infinite;
 }
 
 @-webkit-keyframes pulse {
@@ -31,7 +40,7 @@
       -moz-box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.4);
       box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.4);
   }
-}
+} */
 
 #container {
   margin: 0px auto;

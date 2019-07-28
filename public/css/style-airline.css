@@ -1,3 +1,29 @@
+
+#queue-normal {
+  width: 87%;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: -12px;
+}
+
+#queue-warning {
+  width: 87%;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: -12px;
+  -webkit-animation-name: redPulse;
+  -webkit-animation-duration: 2s;
+  -webkit-animation-iteration-count: infinite;
+}
+
+@-webkit-keyframes redPulse {
+  from { background-color: #f8d7da; -webkit-box-shadow: 0 0 0px #f8d7da; }
+  50% { background-color: #ff8e97; -webkit-box-shadow: 0 0 18px #ff8e97; }
+  to { background-color: #f8d7da; -webkit-box-shadow: 0 0 0px #f8d7da; }
+}
+
 /*--------------------
 Body
 --------------------*/
@@ -26,7 +52,7 @@ Boarding Pass
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
   width: 400px;
-  height: 412px;
+  height: 422px;
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 5px 30px rgba(0, 0, 0, 0.2);
