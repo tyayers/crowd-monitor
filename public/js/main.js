@@ -14,10 +14,16 @@ jQuery(document).ready(function($) {
    //var functionsBaseUrl = "https://us-central1-airport-security.cloudfunctions.net";
    var functionsBaseUrl = "https://airport-security-onv7eg4pxq-ew.a.run.app";
 
-   var checkpointId = localStorage.getItem('checkpointId');
-   if (checkpointId == undefined) {
-	   checkpointId = Math.floor(Math.random() * 10000);
-	   localStorage.setItem('checkpointId', checkpointId);
+   var checkpointId = getUrlVars()["checkpoint"];
+   if (checkpointId != undefined) {
+		localStorage.setItem('checkpointId', checkpointId);
+   }
+   else {
+   		checkpointId = localStorage.getItem('checkpointId');
+   		if (checkpointId == undefined) {
+	   		checkpointId = Math.floor(Math.random() * 10000);
+			localStorage.setItem('checkpointId', checkpointId);
+		}
    }
 
    var offlineData = localStorage.getItem('offlineData');
@@ -199,6 +205,14 @@ jQuery(document).ready(function($) {
 
 	   $("#status-label").text(labels);
    }
+
+   function getUrlVars() {
+		var vars = {};
+		var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+			vars[key] = value;
+		});
+		return vars;
+	}
 
 /* AIRPORT END This block integrates the airport security logic, after this
 is just the template UI code, nothing to do with the airport logic */

@@ -1,11 +1,17 @@
 jQuery(document).ready(function($) {
  
-    var checkpointId = localStorage.getItem('checkpointId');
-    var queueStatus = "";
-    if (checkpointId == undefined) {
-        checkpointId = Math.floor(Math.random() * 10000);
-        localStorage.setItem('checkpointId', checkpointId);
+    var checkpointId = getUrlVars()["checkpoint"];
+    if (checkpointId != undefined) {
+         localStorage.setItem('checkpointId', checkpointId);
     }
+    else {
+        checkpointId = localStorage.getItem('checkpointId');
+        if (checkpointId == undefined) {
+            checkpointId = "1";
+        }
+    }
+
+    var queueStatus = "";
 
     //var functionsBaseUrl = "https://us-central1-airport-security.cloudfunctions.net";
     var functionsBaseUrl = "https://airport-security-onv7eg4pxq-ew.a.run.app";
@@ -61,3 +67,11 @@ jQuery(document).ready(function($) {
 
     }, 2000);
 });
+
+function getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+        vars[key] = value;
+    });
+    return vars;
+}
