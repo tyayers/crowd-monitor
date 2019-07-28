@@ -11,6 +11,8 @@ jQuery(document).ready(function($) {
    var iotstream = undefined;
    var visionService = 0; // 0=google vision, 1=auto ml
    var imageType = "";
+   //var functionsBaseUrl = "https://us-central1-airport-security.cloudfunctions.net";
+   var functionsBaseUrl = "https://airport-security-onv7eg4pxq-ew.a.run.app";
 
    var checkpointId = localStorage.getItem('checkpointId');
    if (checkpointId == undefined) {
@@ -137,7 +139,7 @@ jQuery(document).ready(function($) {
 		var visionEngine = "cloudvision";
 		if (visionService == 1) visionEngine = "amlvision";
 
-		const url = 'https://us-central1-airport-security.cloudfunctions.net/security/vision?engine=' + visionEngine;
+		const url = functionsBaseUrl + '/security/vision?engine=' + visionEngine;
 		const img = canvas.toDataURL('image/jpeg', 0.5).split(',')[1];
 		const payload = { 
 			"requests": [
@@ -192,7 +194,7 @@ jQuery(document).ready(function($) {
 
 	   $.ajax({
 		   type: "PUT",
-		   url: "https://us-central1-airport-security.cloudfunctions.net/security/checkpoint/" + checkpointId + "/status/" + crowd + "/"
+		   url: functionsBaseUrl + "/security/checkpoint/" + checkpointId + "/status/" + crowd + "/"
 	   });
 
 	   $("#status-label").text(labels);

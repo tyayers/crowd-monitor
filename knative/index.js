@@ -24,7 +24,7 @@ firebase.initializeApp({
 
 // Automatically allow cross-origin requests
 app.use(cors({ origin: true }));
-app.use(express.json());
+app.use(express.json({limit: '50mb'}));
 
 // The vision method takes requests in the cloudvision format, and depending on
 // the "engine" url parameter (either "cloudvision" or "amlvision") routes and 

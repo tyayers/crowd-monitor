@@ -7,11 +7,14 @@ jQuery(document).ready(function($) {
         localStorage.setItem('checkpointId', checkpointId);
     }
 
+    //var functionsBaseUrl = "https://us-central1-airport-security.cloudfunctions.net";
+    var functionsBaseUrl = "https://airport-security-onv7eg4pxq-ew.a.run.app";
+
     setInterval(function() {
         
         $.ajax({
             type: "GET",
-            url: "https://us-central1-airport-security.cloudfunctions.net/security/checkpoint/" + checkpointId + "/status",
+            url: functionsBaseUrl + "/security/checkpoint/" + checkpointId + "/status",
             headers: {
                     "Content-Type": "application/json"
             },        
