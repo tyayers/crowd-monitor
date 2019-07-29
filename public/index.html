@@ -65,19 +65,11 @@
             <nav class="site-navigation position-relative text-right" role="navigation">
               <ul class="site-menu js-clone-nav mx-auto d-none d-lg-block">
                 <li><a href="#section-home" class="nav-link js-menu-hide">Home</a></li>
+                <li><a href="https://tyayers-eval-airportdeveloperportal.apigee.io/" target="_blank">Developer Portal</a></li>
                 <li><a href="#section-map" class="nav-link js-menu-hide">Security Map</a></li>
                 <li><a href="#section-how-it-works" class="nav-link js-menu-hide">How It Works</a></li>
-                <li><a href="#" class="nav-link js-menu-hide">Developer Portal</a></li>
-                <li><a href="#" class="nav-link js-menu-hide">Airline App</a></li>
-                <!-- <li class="has-children">
-                  <a href="#section-about" class="nav-link">About Us</a>
-                  <ul class="dropdown">
-                    <li><a href="#section-how-it-works" class="nav-link">How It Works</a></li>
-                    <li><a href="#section-our-team" class="nav-link">Our Team</a></li>
-                  </ul>
-                </li> -->
+                <li><a href="airline-app.html" class="external" target="_blank">Airline App</a></li>
                 <li><a data-toggle="modal" data-target="#settings-modal" class="nav-link js-menu-hide">Settings</a></li>
-                <!-- <li><a href="#section-industries" class="nav-link">Industries</a></li> -->
               </ul>
             </nav>
           </div>
@@ -124,6 +116,9 @@
           <div id="highAlert" class="alert alert-danger pulse" style="position: fixed; bottom: 15px; display: none;" role="alert">
             High queue length, broadcasting alert to registered airline passengers
           </div>
+          <div id="lowAlert" class="alert alert-success" role="alert"  style="position: fixed; bottom: 15px;">  
+            Low queue length, no crowds detected
+          </div>          
         </div>
       </div>
     </div>  
@@ -138,28 +133,11 @@
                 </div>  
                 <img src="images/map.png">
           </div>  
-          <!-- <div class="col-md-5 ml-auto mb-5 order-md-2" data-aos="fade-up" data-aos-delay="100">
-            <img src="images/img_3.jpg" alt="Image" class="img-fluid rounded">
-          </div>
-          <div class="col-md-6 order-md-1" data-aos="fade-up">
-            <div class="text-left pb-1 border-primary mb-4">
-              <h2 class="text-primary">About Us</h2>
-            </div>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis deleniti reprehenderit animi est eaque corporis! Nisi, asperiores nam amet doloribus, soluta ut reiciendis. Consequatur modi rem, vero eos ipsam voluptas.</p>
-            <p class="mb-5">Error minus sint nobis dolor laborum architecto, quaerat. Voluptatum porro expedita labore esse velit veniam laborum quo obcaecati similique iusto delectus quasi!</p>
-            
-            <ul class="ul-check list-unstyled success">
-              <li>Error minus sint nobis dolor</li>
-              <li>Voluptatum porro expedita labore esse</li>
-              <li>Voluptas unde sit pariatur earum</li>
-            </ul> -->
-            
-          </div>
-          
         </div>
+          
       </div>
     </div>
-  
+    
     <!-- Settings Modal -->
     <div class="modal fade" id="settings-modal" tabindex="-1" style="z-index: 2000;" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
@@ -221,6 +199,12 @@
                 <div class="col mt-1">
                   <a class="test-image-select" href="#"><img src="images/airport/airport-empty1.jpg" width="150px" height="100px"></a>
                 </div>
+                <div class="col mt-1">
+                  <a class="test-image-select" href="#"><img src="images/airport/group-crowd1.jpg" width="150px" height="100px"></a>
+                </div>
+                <div class="col mt-1">
+                  <a class="test-image-select" href="#"><img src="images/airport/group-empty1.jpg" width="150px" height="100px"></a>
+                </div>                                
               </div>
             </div>          
           </div>
@@ -243,12 +227,12 @@
             <div class="how-it-work-item">
               <span class="number">1</span>
               <div class="how-it-work-body">
-                <h2>Make An Order</h2>
-                <p class="mb-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt praesentium dicta consectetur fuga neque fugit a at. Cum quod vero assumenda iusto.</p>
+                <h2>Turn on Airport Security</h2>
+                <p class="mb-5">Start the analysis by either starting the camera, which will use real camera footage, or by selecting a test image.</p>
                 <ul class="ul-check list-unstyled success">
-                  <li class="text-white">Error minus sint nobis dolor</li>
-                  <li class="text-white">Voluptatum porro expedita labore esse</li>
-                  <li class="text-white">Voluptas unde sit pariatur earum</li>
+                  <li class="text-white">Start analysis</li>
+                  <li class="text-white">Observe results (image analysis results should be visible on the screen)</li>
+                  <li class="text-white">If a crowd result is there, then a security queue alert should be triggered</li>
                 </ul>
               </div>
             </div>
@@ -258,12 +242,10 @@
             <div class="how-it-work-item">
               <span class="number">2</span>
               <div class="how-it-work-body">
-                <h2>Make A Payment</h2>
-                <p class="mb-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt praesentium dicta consectetur fuga neque fugit a at. Cum quod vero assumenda iusto.</p>
+                <h2>Open the Airline App</h2>
+                <p class="mb-5">Open the Airline App from the header menu.</p>
                 <ul class="ul-check list-unstyled success">
-                  <li class="text-white">Error minus sint nobis dolor</li>
-                  <li class="text-white">Voluptatum porro expedita labore esse</li>
-                  <li class="text-white">Voluptas unde sit pariatur earum</li>
+                  <li class="text-white">If a queue alert was triggered, then it should also be visible in the Airline App</li>
                 </ul>
               </div>
             </div>
@@ -273,13 +255,12 @@
             <div class="how-it-work-item">
               <span class="number">3</span>
               <div class="how-it-work-body">
-                <h2>Track Your Order</h2>
-                <p class="mb-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt praesentium dicta consectetur fuga neque fugit a at. Cum quod vero assumenda iusto.</p>
+                <h2>Empty the queue</h2>
+                <p class="mb-5">After triggering the queue alert, now either turn the camera to a non-congested view, or select a non-congested sampel image.</p>
                 <ul class="ul-check list-unstyled success">
-                  <li class="text-white">Error minus sint nobis dolor</li>
-                  <li class="text-white">Voluptatum porro expedita labore esse</li>
-                  <li class="text-white">Voluptas unde sit pariatur earum</li>
-                </ul>
+                  <li class="text-white">The queue alert should disappear in the Airport Security App</li>
+                  <li class="text-white">The queue alert should also disappear from the Airline App</li>
+               </ul>
               </div>
             </div>
           </div>
@@ -294,7 +275,7 @@
         <div class="row align-items-center justify-content-center text-center">
 
           <div class="col-md-7" data-aos="fade-up">
-            <a href="https://vimeo.com/channels/staffpicks/93951774" class="play-single-big mb-4 d-inline-block popup-vimeo"><span class="icon-play"></span></a>
+            <a href="https://www.youtube.com/watch?v=jWwmWvhI40Q" class="play-single-big mb-4 d-inline-block popup-youtube"><span class="icon-play"></span></a>
             <h2 class="text-white font-weight-light mb-5 h1">Watch The Video</h2>
             
           </div>
@@ -319,8 +300,8 @@
                 
               </figure>
               <blockquote>
-                <p>&ldquo;Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur unde reprehenderit aperiam quaerat fugiat repudiandae explicabo animi minima fuga beatae illum eligendi incidunt consequatur. Amet dolores excepturi earum unde iusto.&rdquo;</p>
-                <p class="author"> &mdash; John Trump</p>
+                <p>&ldquo;The Airport Security Queue functionality provided by Apigee totally saved my trip, I really would have missed my flight without it!&rdquo;</p>
+                <p class="author"> &mdash; John Travis</p>
               </blockquote>
             </div>
           </div>
@@ -331,8 +312,8 @@
                 
               </figure>
               <blockquote>
-                <p>&ldquo;Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur unde reprehenderit aperiam quaerat fugiat repudiandae explicabo animi minima fuga beatae illum eligendi incidunt consequatur. Amet dolores excepturi earum unde iusto.&rdquo;</p>
-                <p class="author"> &mdash; Roger Moore</p>
+                <p>&ldquo;I've had some bad experiences with security queues in the past, but no more!  Now I know how much time I have to plan!&rdquo;</p>
+                <p class="author"> &mdash; Sue Moore</p>
               </blockquote>
             </div>
           </div>
@@ -343,7 +324,7 @@
                 <img src="images/person_4.jpg" alt="Image" class="img-fluid mb-3">
               </figure>
               <blockquote>
-                <p>&ldquo;Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur unde reprehenderit aperiam quaerat fugiat repudiandae explicabo animi minima fuga beatae illum eligendi incidunt consequatur. Amet dolores excepturi earum unde iusto.&rdquo;</p>
+                <p>&ldquo;I was sitting in a cafe drinking my sixth coffee, thinking I had all the time in the world, when I got the alert that I would need some extra time at the airport.  Thanks Apigee, you're the best!&rdquo;</p>
                 <p class="author"> &mdash; Ben Carson</p>
               </blockquote>
             </div>
@@ -355,7 +336,7 @@
                 <img src="images/person_5.jpg" alt="Image" class="img-fluid mb-3">
               </figure>
               <blockquote>
-                <p>&ldquo;Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur unde reprehenderit aperiam quaerat fugiat repudiandae explicabo animi minima fuga beatae illum eligendi incidunt consequatur. Amet dolores excepturi earum unde iusto.&rdquo;</p>
+                <p>&ldquo;I had missed 7 out of 8 of my last flights, but the Security Queue alert really changed my habits, and now I catch every single flight I have! &rdquo;</p>
                 <p class="author"> &mdash; Jed Smith</p>
               </blockquote>
             </div>
@@ -364,133 +345,6 @@
         </div>
       </div>
     </div>
-
-    <div class="site-section" id="section-blog">
-      <div class="container">
-        <div class="row justify-content-center mb-5">
-          <div class="col-md-7 text-center border-primary">
-            <h2 class="font-weight-light text-primary">Our Blog</h2>
-            <p class="color-black-opacity-5">See Our Daily News &amp; Updates</p>
-          </div>
-        </div>
-        <div class="row mb-5 align-items-stretch">
-          <div class="col-md-6 col-lg-4 mb-4 mb-lg-4" data-aos="fade-up">
-            <div class="h-entry">
-              <img src="images/blog_1.jpg" alt="Image" class="img-fluid">
-              <h2 class="font-size-regular"><a href="#">How Logistics Company Improve Spendings</a></h2>
-              <div class="meta mb-4">by Jed Wilson <span class="mx-2">&bullet;</span> Jan 18, 2019 <span class="mx-2">&bullet;</span> <a href="#">News</a></div>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus eligendi nobis ea maiores sapiente veritatis reprehenderit suscipit quaerat rerum voluptatibus a eius.</p>
-            </div> 
-          </div>
-          <div class="col-md-6 col-lg-4 mb-4 mb-lg-4" data-aos="fade-up" data-aos-delay="100">
-            <div class="h-entry">
-              <img src="images/blog_2.jpg" alt="Image" class="img-fluid">
-              <h2 class="font-size-regular"><a href="#">How Logistics Company Improve Spendings</a></h2>
-              <div class="meta mb-4">by Jed Wilson <span class="mx-2">&bullet;</span> Jan 18, 2019 <span class="mx-2">&bullet;</span> <a href="#">News</a></div>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus eligendi nobis ea maiores sapiente veritatis reprehenderit suscipit quaerat rerum voluptatibus a eius.</p>
-            </div> 
-          </div>
-          <div class="col-md-6 col-lg-4 mb-4 mb-lg-4" data-aos="fade-up" data-aos-delay="200">
-            <div class="h-entry">
-              <img src="images/blog_3.jpg" alt="Image" class="img-fluid">
-              <h2 class="font-size-regular"><a href="#">How Logistics Company Improve Spendings</a></h2>
-              <div class="meta mb-4">by Jed Wilson <span class="mx-2">&bullet;</span> Jan 18, 2019 <span class="mx-2">&bullet;</span> <a href="#">News</a></div>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus eligendi nobis ea maiores sapiente veritatis reprehenderit suscipit quaerat rerum voluptatibus a eius.</p>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-12 text-center" data-aos="fade-up" data-aos-delay="300">
-            <p class="mb-0"><a href="https://free-template.co" class="btn btn-primary py-3 px-5 text-white">View All Blog Posts</a></p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="site-section bg-light" id="section-contact">
-      <div class="container">
-        <div class="row justify-content-center mb-5">
-          <div class="col-md-7 text-center border-primary">
-            <h2 class="font-weight-light text-primary">Contact Us</h2>
-            <p class="color-black-opacity-5">See Our Daily News &amp; Updates</p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-7 mb-5">
-
-            
-
-            <form action="#" class="p-5 bg-white">
-             
-
-              <div class="row form-group">
-                <div class="col-md-6 mb-3 mb-md-0">
-                  <label class="text-black" for="fname">First Name</label>
-                  <input type="text" id="fname" class="form-control">
-                </div>
-                <div class="col-md-6">
-                  <label class="text-black" for="lname">Last Name</label>
-                  <input type="text" id="lname" class="form-control">
-                </div>
-              </div>
-
-              <div class="row form-group">
-                
-                <div class="col-md-12">
-                  <label class="text-black" for="email">Email</label> 
-                  <input type="email" id="email" class="form-control">
-                </div>
-              </div>
-
-              <div class="row form-group">
-                
-                <div class="col-md-12">
-                  <label class="text-black" for="subject">Subject</label> 
-                  <input type="subject" id="subject" class="form-control">
-                </div>
-              </div>
-
-              <div class="row form-group">
-                <div class="col-md-12">
-                  <label class="text-black" for="message">Message</label> 
-                  <textarea name="message" id="message" cols="30" rows="7" class="form-control"></textarea>
-                </div>
-              </div>
-
-              <div class="row form-group">
-                <div class="col-md-12">
-                  <input type="submit" value="Send Message" class="btn btn-primary py-2 px-4 text-white">
-                </div>
-              </div>
-
-  
-            </form>
-          </div>
-          <div class="col-md-5">
-            
-            <div class="p-4 mb-3 bg-white">
-              <p class="mb-0 font-weight-bold">Address</p>
-              <p class="mb-4">203 Fake St. Mountain View, San Francisco, California, USA</p>
-
-              <p class="mb-0 font-weight-bold">Phone</p>
-              <p class="mb-4"><a href="#">+1 232 3235 324</a></p>
-
-              <p class="mb-0 font-weight-bold">Email Address</p>
-              <p class="mb-0"><a href="#">youremail@domain.com</a></p>
-
-            </div>
-            
-            <div class="p-4 mb-3 bg-white">
-              <h3 class="h5 text-black mb-3">More Info</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa ad iure porro mollitia architecto hic consequuntur. Distinctio nisi perferendis dolore, ipsa consectetur? Fugiat quaerat eos qui, libero neque sed nulla.</p>
-              <p><a href="#" class="btn btn-primary px-4 py-2 text-white">Learn More</a></p>
-            </div>
-
-          </div>
-        </div>
-      </div>
-    </div>
-  
     
     <footer class="site-footer">
       <div class="container">
@@ -499,37 +353,24 @@
             <div class="row">
               <div class="col-md-5 mr-auto">
                 <h2 class="footer-heading mb-4">About Us</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam iure deserunt ut architecto dolores quo beatae laborum aliquam ipsam rem impedit obcaecati ea consequatur.</p>
+                <p>Visit us at apigee.com, and read our latest updates on our <a href="https://cloud.google.com/blog/products/apigee" target="_blank">blog</a>.</p>
               </div>
               
               <div class="col-md-3">
                 <h2 class="footer-heading mb-4">Quick Links</h2>
                 <ul class="list-unstyled">
-                  <li><a href="#">About Us</a></li>
-                  <li><a href="#">Services</a></li>
-                  <li><a href="#">Testimonials</a></li>
-                  <li><a href="#">Contact Us</a></li>
+                  <li><a href="https://docs.apigee.com/api-platform/get-started/what-apigee-edge">About Us</a></li>
+                  <li><a href="https://cloud.google.com/blog/products/gcp/apigee-named-a-leader-in-the-gartner-magic-quadrant-for-full-life-cycle-api-management-for-the-third-consecutive-time">Testimonials</a></li>
+                  <li><a href="https://cloud.google.com/contact-apigee/">Contact Us</a></li>
                 </ul>
               </div>
               <div class="col-md-3">
                 <h2 class="footer-heading mb-4">Follow Us</h2>
-                <a href="#" class="pl-0 pr-3"><span class="icon-facebook"></span></a>
-                <a href="#" class="pl-3 pr-3"><span class="icon-twitter"></span></a>
-                <a href="#" class="pl-3 pr-3"><span class="icon-instagram"></span></a>
-                <a href="#" class="pl-3 pr-3"><span class="icon-linkedin"></span></a>
+                <a href="https://www.facebook.com/apigee/" class="pl-0 pr-3"><span class="icon-facebook"></span></a>
+                <a href="https://twitter.com/Apigee" class="pl-3 pr-3"><span class="icon-twitter"></span></a>
+                <a href="https://www.linkedin.com/company/apigee" class="pl-3 pr-3"><span class="icon-linkedin"></span></a>
               </div>
             </div>
-          </div>
-          <div class="col-md-3">
-            <h2 class="footer-heading mb-4">Subscribe Newsletter</h2>
-            <form action="#" method="post">
-              <div class="input-group mb-3">
-                <input type="text" class="form-control border-secondary text-white bg-transparent" placeholder="Enter Email" aria-label="Enter Email" aria-describedby="button-addon2">
-                <div class="input-group-append">
-                  <button class="btn btn-primary text-white" type="button" id="button-addon2">Send</button>
-                </div>
-              </div>
-            </form>
           </div>
         </div>
         <div class="row pt-5 mt-5 text-center">

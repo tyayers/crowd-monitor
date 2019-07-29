@@ -95,7 +95,7 @@ jQuery(document).ready(function($) {
 			imageType = "LOW";
 
 		$('#pictures-modal').modal('hide')
-		//$("#videoElement").prop("poster", imageSrc)
+		$("#videoElement").prop("poster", imageSrc)
 
 		var img = new Image();
 		img.onload = draw;
@@ -193,10 +193,14 @@ jQuery(document).ready(function($) {
 		   }
 	   }
 
-	   if (crowd == "high")
-		   $("#highAlert").fadeIn();
-	   else
+	   if (crowd == "high") {
+			$("#lowAlert").fadeOut();
+			$("#highAlert").fadeIn();
+	   }
+	   else {
 		   $("#highAlert").fadeOut();		
+		   $("#lowAlert").fadeIn();
+		}
 
 	   $.ajax({
 		   type: "PUT",
@@ -286,7 +290,7 @@ is just the template UI code, nothing to do with the airport logic */
 
 	   $('body').on('click', '.js-menu-hide', function(e) {
 		   var $this = $(this);
-		   e.preventDefault();
+		   //e.preventDefault();
 
 		   if ( $('body').hasClass('offcanvas-menu') ) {
 			   $('body').removeClass('offcanvas-menu');
@@ -524,18 +528,20 @@ is just the template UI code, nothing to do with the airport logic */
 
  // navigation
  var OnePageNavigation = function() {
-   var navToggler = $('.site-menu-toggle');
-	  $("body").on("click", "#site-navbar .site-menu li a[href^='#'], .smoothscroll[href^='#'], .site-mobile-menu .site-nav-wrap li a", function(e) {
-	 e.preventDefault();
-	 var hash = this.hash;
-	 
-	   $('html, body').animate({
+	var navToggler = $('.site-menu-toggle');
+	$("body").on("click", "#site-navbar .site-menu li a[href^='#'], .smoothscroll[href^='#'], .site-mobile-menu .site-nav-wrap li a", function(e) {
+		
+		if (e.target.href.startsWith("#")) {
+			e.preventDefault();
+			var hash = this.hash;
+			
+			$('html, body').animate({
 
-		 scrollTop: $(hash).offset().top
-	   }, 400, 'easeInOutExpo', function(){
-		 window.location.hash = hash;
-	   });
-
+				scrollTop: $(hash).offset().top
+			}, 400, 'easeInOutExpo', function(){
+				window.location.hash = hash;
+			});
+		}
    });
 
    // $("#menu li a[href^='#']").on('click', function(e){
