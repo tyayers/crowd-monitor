@@ -3,14 +3,16 @@ This is a demo of digital airport APIs, services, and applications to greatly im
 
 ## Components
 <img src="/img/airport-security-app.png" height="350" />
+
 [Digital Airport Security App](https://airport-security.web.app)
 This app monitors security camera footage for crowds build-up, and in case a crowd is recognized through the *security/vision* API, then accordingly sent to the *security/checkpoint/id/status* API.
 
-![Developer Portal](/img/dev-portal.png =350x)
+<img src="/img/dev-portal.png" height="350" />
+
 [Digital Airport Developer Portal](https://tyayers-eval-airportdeveloperportal.apigee.io/)
 The Digital Airport Developer Portal serves as integration hub for all apps & services, and includes the security checkpoint API documentation.
 
-![Airline app](/img/airline-app.png =350x)
+<img src="/img/airline-app.png" height="350" />
 [Airline Customer App](https://airport-security.web.app/airline-app.html)
 The Airline Customer App is a sample app of how the security checkpoint API could be integrated by an airline to provide live, real-time queue updates directly on the boarding app, as well as notifications to make sure the traveller gets to the airport on time.
 
