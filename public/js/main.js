@@ -12,7 +12,12 @@ jQuery(document).ready(function($) {
    var visionService = 0; // 0=google vision, 1=auto ml
    var imageType = "";
    //var functionsBaseUrl = "https://us-central1-airport-security.cloudfunctions.net";
-   var functionsBaseUrl = "https://airport-security-onv7eg4pxq-ew.a.run.app";
+   //var functionsBaseUrl = "https://airport-security-onv7eg4pxq-ew.a.run.app";
+   var functionsBaseUrl = "https://tyayers-eval-prod.apigee.net/airport";
+   var key = "";
+   $.get("https://us-central1-airport-security.cloudfunctions.net/security/digitalairportkey", function(data) {
+	   key = JSON.parse(data).key;
+   });
 
    var checkpointId = getUrlVars()["checkpoint"];
    if (checkpointId != undefined) {
@@ -145,7 +150,10 @@ jQuery(document).ready(function($) {
 		var visionEngine = "cloudvision";
 		if (visionService == 1) visionEngine = "amlvision";
 
-		const url = functionsBaseUrl + '/security/vision?engine=' + visionEngine;
+		var url = functionsBaseUrl + '/security/vision?engine=' + visionEngine;
+		if (key != "" && key != undefined)
+			url += "&apikey=" + key;
+
 		const img = canvas.toDataURL('image/jpeg', 0.5).split(',')[1];
 		const payload = { 
 			"requests": [
@@ -201,10 +209,13 @@ jQuery(document).ready(function($) {
 		   $("#highAlert").fadeOut();		
 		   $("#lowAlert").fadeIn();
 		}
+		var url = functionsBaseUrl + "/security/checkpoint/" + checkpointId + "/status/" + crowd + "/";
+		if (key != "" && key != undefined)
+			url += "&apikey=" + key;
 
 	   $.ajax({
 		   type: "PUT",
-		   url: functionsBaseUrl + "/security/checkpoint/" + checkpointId + "/status/" + crowd + "/"
+		   url: url
 	   });
 
 	   $("#status-label").text(labels);

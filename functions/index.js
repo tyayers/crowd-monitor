@@ -133,6 +133,15 @@ app.get('/checkpoint/:checkpointId/status', (req, res) => {
   });		
 });
 
+app.get('/digitalairportkey', (req, res) => {
+
+  var result = { 
+    key: functions.config().security.digitalairportkey
+  };
+
+  res.end(JSON.stringify(result));
+});
+
 // callCloudVision calls the Google Cloud Vision API using the request-promise library
 function callCloudVision(req) {
   return new Promise(function(resolve, reject) {

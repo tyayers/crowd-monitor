@@ -39,10 +39,8 @@ paths:
           enum: [cloudvision, amlvision]
           required: false
       responses:
-        200:
-          description: "Successful response"
-          schema:
-            $ref: '#/definitions/ImageResponse'
+        '200':
+          $ref: '#/definitions/ImageResponse'
   /cloudvision:
     post:
       summary: Analyzes the posted image using cloud vision AI and returns the labels and scores of the objects found in the image. This is identical to calling the vision api with query parameter engine=cloudvision
@@ -54,8 +52,8 @@ paths:
           schema:
             $ref: '#/definitions/ImageRequest'
       responses:
-        200:
-          $ref: '#/definitions/ImageResponse'
+        '200':
+          $ref: '#/definitions/ImageResponse'   
   /amlvision:
     post:
       summary: Analyzes the posted image using cloud vision AI and returns the labels and scores of the objects found in the image. This is identical to calling the vision api with query parameter engine=amlvision
@@ -67,7 +65,7 @@ paths:
           schema:
             $ref: '#/definitions/ImageRequest'
       responses:
-        200:
+        '200':
           $ref: '#/definitions/ImageResponse'
   /checkpoint/{checkpointId}/status:
     get:
@@ -78,24 +76,6 @@ paths:
           name: checkpointId
           in: path
           required: true    
-      responses:
-        200:
-          $ref: '#/definitions/CheckpointStatus'
-    put:
-      summary: Sets the security checkpoint queue status
-      parameters:
-        - type: string
-          description: The security checkpoint Id
-          name: checkpointId
-          in: path
-          required: true    
-        - type: string
-          description: The status of the security queue length
-          name: queueStatus
-          in: path
-          default: low
-          enum: [high, medium, low]
-          required: true
       responses:
         200:
           $ref: '#/definitions/CheckpointStatus'
@@ -138,7 +118,7 @@ definitions:
         description: The image analysis response labels
         type: array
         items:
-          $ref: '#/definitions/LabelAnnotations'  
+          $ref: '#/definitions/LabelAnnotations'
   LabelAnnotations:
     type: object
     properties:
@@ -159,11 +139,11 @@ definitions:
       score:
         description: How accurate the object recognition was
         type: number
-        format: double
+        format: float
       topicality:
         description: How topical the object is, relating to the score.
         type: number
-        format: double
+        format: float
   CheckpointStatus:
     type: object
     properties:
@@ -174,3 +154,4 @@ definitions:
         description: The queue status for the checkpoint, high being very full, medium moderately full, and low is pretty empty.
         type: string
         enum: [high, medium, low]
+      
