@@ -106,14 +106,30 @@ app.post('/security/amlvision', (req, res) => {
 app.put('/security/checkpoint/:checkpointId/status/:queueStatus', (req, res) => {
   const checkpointId = req.params.checkpointId;
   const queueStatus = req.params.queueStatus;
+  var result = {
+    result: "unknown"
+  }
+  console.log("received request for " + checkpointId + " and status " + queueStatus);
+
+  console.log("opening firestore");
 
   var db = firebase.firestore();
+  
+  console.log("writing new status");
+  
   db.collection("security").doc(checkpointId).set({
     status: queueStatus
   })
   .catch(function(error) {
     console.error("Error writing document: ", error);
+    result.result = "Error writing document: " + error;
   });		
+
+  result.result = "Status updated.";
+
+  console.log("finished writing status");
+
+  res.end(JSON.stringify(result));
 });
 
 app.get('/security/checkpoint/:checkpointId/status', (req, res) => {

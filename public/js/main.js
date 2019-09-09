@@ -209,9 +209,9 @@ jQuery(document).ready(function($) {
 		   $("#highAlert").fadeOut();		
 		   $("#lowAlert").fadeIn();
 		}
-		var url = functionsBaseUrl + "/security/checkpoint/" + checkpointId + "/status/" + crowd + "/";
+		var url = functionsBaseUrl + "/security/checkpoint/" + checkpointId + "/status/" + crowd;
 		if (key != "" && key != undefined)
-			url += "&apikey=" + key;
+			url += "?apikey=" + key;
 
 	   $.ajax({
 		   type: "PUT",
