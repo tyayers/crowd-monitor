@@ -21,6 +21,15 @@ The Airline Customer App is a sample app of how the security checkpoint API coul
 
 <img src="img/airline-app.png" height="350" />
 
+## Demo Guide
+1. *Explain the problem:* Travellers have limited visibility about congestion problems at airports, so introducing an automated crowd monitoring solution can help alert travellers and staff to congestion in the security queue lines, and help travellers prepare for their trip to the airport, and avoid missing the flights.
+2. *Show the solution:* The Digital Airport Security app monitors the airport queue footage for congestion using the Google Cloud Vision API or the Google AutoML Vision API.  Changes are posted to the Digital Airport API.
+3. *Show the integration strategy:* The Digital Airport Developer Portal is the integration point both for the security solution to post crowd updates, and also for the airline apps to integrate the data to display alerts in their borading apps.
+4. *Demonstrate:* Have both web pages open side-by-side in browser windows, and select a low-congestion photo.  Then select a high-congestion photo, and see how the crowd recognition data is sent to the Digital Airport API, and the alert activated in the airline boarding app.
+5. *Demonstarate:* An advanced solution can also use the Google AutoML Vision service to traing crowd recognition on cusom datasets, to even further improve accuracy.
+
+![Google Cloud AutoML Vision Service with an airport queue dataset](img/automl.png)
+
 ## Architecture
  ![Digital Airport solution architecture overview](img/digital-airport-architecture.png)
 
@@ -36,7 +45,7 @@ The Airline Customer App is a sample app of how the security checkpoint API coul
 
 Note: The backend service in the Knative directory can be deployed to any container host, the instructions below are for deploying to [Google Cloud Run](https://cloud.google.com/run/).
 
-1. Build and push the container in the Knative directory to [Google Container Registry](https://cloud.google.com/container-registry/docs/pushing-and-pulling#pushing_an_image_to_a_registry)
+1. Build and push the container in the Knative directory to [Google Container Registry](https://cloud.google.com/container-registry/docs/pushing-and-pulling#pushing_an_image_to_a_registry).  If you want to use a custom AutoML Vision dataset for image recognition, then you must also configure a privatekey under privatekey.json in the knative directory.
 2. Deploy the pushed container to [Cloud Run](https://cloud.google.com/run/docs/deploying#service)
 3. Configure the environment variables VISIONKEY with your Google Cloud Vision API key, FBKEY with your Firebase database access key, FBPROJECT with your Firebase project name, and the key FBDOMAIN with the root domain of your Firebase project. The keys are used to access the Firestore database, so fore more information on which keys are needed see docs here: [Firestore Getting Started](https://firebase.google.com/docs/firestore/quickstart#initialize)
 4. Configure the Cloud Run service URL as the target endpoint in your Apigee API Proxy.
