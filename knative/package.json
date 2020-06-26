@@ -15,7 +15,7 @@
     "express": "^4.17.1",
     "firebase": "^6.3.3",
     "firebase-admin": "^8.3.0",
-    "jsrsasign": "^8.0.12",
+    "jsrsasign": "^8.0.19",
     "request": "^2.88.0",
     "request-promise": "^4.2.4"
   }
