@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Digital Airport Security</title>
+    <title>Transport Manager</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
@@ -9,18 +9,6 @@
     <meta name="keywords" content="" />
     <meta name="author" content="Free-Template.co" />
     <link rel="shortcut icon" href="favicon.png" type="image/png">
-
-    <!-- update the version number as needed -->
-    <script defer src="/__/firebase/6.2.4/firebase-app.js"></script>
-    <!-- include only the Firebase features as you need -->
-    <script defer src="/__/firebase/6.2.4/firebase-auth.js"></script>
-    <script defer src="/__/firebase/6.2.4/firebase-firestore.js"></script>
-    <script defer src="/__/firebase/6.2.4/firebase-messaging.js"></script>
-    <script defer src="/__/firebase/6.2.4/firebase-storage.js"></script>
-    <script defer src="/__/firebase/6.2.4/firebase-functions.js"></script>
-    <!-- initialize the SDK after all desired features are loaded -->
-    <script defer src="/__/firebase/init.js"></script>
-
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,700,900|Display+Playfair:200,300,400,700"> 
     <link rel="stylesheet" href="fonts/icomoon/style.css">
@@ -59,16 +47,17 @@
         <div class="row align-items-center">
           
           <div class="col-11 col-xl-2 site-logo">
-            <h1 class="mb-0"><a href="index.html" style="white-space: nowrap;" class="text-white h2 mb-0">Digital Airport Security</a></h1>
+            <h1 class="mb-0"><a href="index.html" style="white-space: nowrap;" class="text-white h2 mb-0">Transport Manager</a></h1>
           </div>
           <div class="col-12 col-md-10 d-none d-xl-block">
             <nav class="site-navigation position-relative text-right" role="navigation">
               <ul class="site-menu js-clone-nav mx-auto d-none d-lg-block">
                 <li><a href="#section-home" class="nav-link js-menu-hide">Home</a></li>
-                <li><a href="https://tyayers-eval-airportdeveloperportal.apigee.io/" target="_blank">Developer Portal</a></li>
+                <li><a href="../passenger-app" class="external" target="_blank">Passenger App</a></li>
+                
                 <li><a href="#section-map" class="nav-link js-menu-hide">Security Map</a></li>
                 <li><a href="#section-how-it-works" class="nav-link js-menu-hide">How It Works</a></li>
-                <li><a href="airline-app.html" class="external" target="_blank">Airline App</a></li>
+                <li><a href="https://emea-poc13-kaleotransport.apigee.io" target="_blank">Developer Portal</a></li>
                 <li><a data-toggle="modal" data-target="#settings-modal" class="nav-link js-menu-hide">Settings</a></li>
               </ul>
             </nav>
@@ -78,10 +67,8 @@
           <div class="d-inline-block d-xl-none ml-md-0 mr-auto py-3" style="position: relative; top: 3px;"><a href="#" class="site-menu-toggle js-menu-toggle"><span class="icon-menu h3"></span></a></div>
 
           </div>
-
         </div>
       </div>
-      
     </header>
 
   
@@ -95,13 +82,17 @@
 
               <div class="row">
                 <div class="col">
-                    <canvas class="w-100" id="canvas"></canvas>                    
+                    <canvas class="w-100" id="canvas" style="display: none;"></canvas>  
+                    <video autoplay="true" id="videoElement"></video>                  
                 </div>
                 <div class="col" style="text-align: left">
                   <button id="start-button" type="button" class="btn btn-primary w-100" style="margin-bottom: 5px;">Start Camera</button>
                   <button id="saved-images-button" data-toggle="modal" data-target="#pictures-modal" type="button" class="btn btn-primary w-100" style="margin-bottom: 5px;">Select test image</button>
-                  <!-- <input type="file" id="inp" class="btn btn-primary w-100"> -->
-                  <video autoplay="true" id="videoElement"></video>
+                  <button id="load-images-button" type="button" class="btn btn-primary w-100" style="margin-bottom: 5px;" onclick="$('#inp').click()">Load image file</button>
+                  <input type="file" id="inp" class="btn btn-primary w-100" hidden>
+                  <div style="color: white;">Passenger comments: </div>
+                  <div id="passenger-comments" style="background: #222; opacity: .7; width: 100%; height: 215px; overflow: auto; padding: 2px;"></div>
+                 
                 </div>
               </div>
 
@@ -158,20 +149,20 @@
               <label class="custom-control-label" for="offline-switch">Test Mode - use test data for vision service</label>
             </div>  
             <br>
-            <label for="vision-select">AI Vision Service</label>
-            <select class="form-control" id="vision-select">
+            <!--label for="vision-select">AI Vision Service</label>
+            <select class="form-control" id="vision-select" disabled>
               <option>Google Cloud Vision API</option>
               <option>Google Cloud AutoML - Airport Security Dataset</option>
-            </select>
+            </select-->
             <br>
             <div>
-              <label for="checkpointLabel">Security Checkpoint Id</label>
-              <input type="email" class="form-control" id="checkpointInput" aria-describedby="checkpointHelp" placeholder="Enter Checkpoint Id" disabled>
-              <small id="emailHelp" class="form-text text-muted">This Id is used to identity the checkpoint with a customer's boarding gate.</small>
-            </div>          
+              <label for="checkpointLabel">Checkpoint Id</label>
+              <input class="form-control" id="checkpointInput" aria-describedby="checkpointHelp" placeholder="Enter Checkpoint Id">
+              <small id="emailHelp" class="form-text text-muted">This Id uniquley identifies this checkpoint.</small>
+            </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" id="settings-save-button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           </div>
         </div>
       </div>
@@ -402,35 +393,15 @@
 
   <script>
 
-window.onload = () => {
-  'use strict';
+// window.onload = () => {
+//   'use strict';
 
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker
-             .register('./js/sw.js');
-  }
-}
+//   if ('serviceWorker' in navigator) {
+//     navigator.serviceWorker
+//              .register('./js/sw.js');
+//   }
+// }
 
-    document.addEventListener('DOMContentLoaded', function() {
-      // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-      // // The Firebase SDK is initialized and available here!
-      //
-      // firebase.auth().onAuthStateChanged(user => { });
-      // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
-      // firebase.messaging().requestPermission().then(() => { });
-      // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
-      //
-      // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-
-      try {
-        let app = firebase.app();
-        let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
-        // document.getElementById('load').innerHTML = `Firebase SDK loaded with ${features.join(', ')}`;
-      } catch (e) {
-        console.error(e);
-        // document.getElementById('load').innerHTML = 'Error loading the Firebase SDK, check the console.';
-      }
-    });
   </script> 
   
   <script src="js/main.js"></script>

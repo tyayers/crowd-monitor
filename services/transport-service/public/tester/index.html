@@ -1,0 +1,21 @@
+<html>
+  <head>
+    <title>Alert Tester</title>
+  </head>
+  <body>
+
+    <div id="alert-text" style="width: 100%; text-align: center; font-size: 22px; font-family: monospace;">
+
+    </div>
+    <script type="text/javascript">
+      var es = new EventSource('/transport/alerts/stream');
+      var alertDiv = document.getElementById("alert-text");
+      es.onmessage = function (event) {
+        var oldText = alertDiv.innerText;
+        alertDiv.innerText = event.data + "\n" + alertDiv.innerText;
+      };
+    </script>
+  </body>
+</html>
+
+

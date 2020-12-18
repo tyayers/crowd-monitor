@@ -1,0 +1,12 @@
+{
+  "name": "Transport-Checkpoint",
+  "env": {
+      "checkpointId": {
+          "description": "The Id for this transport checkpoint, used in dashboards and data."
+      },
+      "baseServiceUrl": {
+          "description": "The Apigee hub service URL, you can use this default as a start.",
+          "value": "https://emea-poc13-test.apigee.net/transport"
+      }
+  }
+}

@@ -7,46 +7,89 @@ AOS.init({
 /* AIRPORT START This block integrates the airport security logic */
 jQuery(document).ready(function($) {
 
-   var iotRunning = false;
-   var iotstream = undefined;
-   var visionService = 0; // 0=google vision, 1=auto ml
-   var imageType = "";
-   //var functionsBaseUrl = "https://us-central1-airport-security.cloudfunctions.net";
-   //var functionsBaseUrl = "https://airport-security-onv7eg4pxq-ew.a.run.app";
-   var functionsBaseUrl = "https://tyayers-eval-prod.apigee.net/airport";
-   var key = "";
-   $.get("https://us-central1-airport-security.cloudfunctions.net/security/digitalairportkey", function(data) {
-	   key = JSON.parse(data).key;
-   });
+	var iotRunning = false;
+	var iotstream = undefined;
+	var visionService = 0; // 0=google vision, 1=auto ml
+	var imageType = "";
+	//var functionsBaseUrl = "https://us-central1-airport-security.cloudfunctions.net";
+	//var functionsBaseUrl = "https://airport-security-onv7eg4pxq-ew.a.run.app";
+	var functionsBaseUrl = "";
 
-   var checkpointId = getUrlVars()["checkpoint"];
-   if (checkpointId != undefined) {
-		localStorage.setItem('checkpointId', checkpointId);
-   }
-   else {
-   		checkpointId = localStorage.getItem('checkpointId');
-   		if (checkpointId == undefined) {
-	   		checkpointId = Math.floor(Math.random() * 10000);
+	var checkpointId = undefined; 
+	fetch('/parameters')
+  .then(response => response.json())
+	.then(data => {
+		if (data.checkpointId)
+			checkpointId = data.checkpointId;
+		if (data.baseServiceUrl)
+			functionsBaseUrl = data.baseServiceUrl;
+	})
+	.finally(() => {
+		var tempId = getUrlVars()["checkpoint"];
+		if (tempId) checkpointId = tempId;
+
+		if (checkpointId != undefined) {
 			localStorage.setItem('checkpointId', checkpointId);
 		}
-   }
+		else {
+			checkpointId = localStorage.getItem('checkpointId');
+			if (checkpointId == undefined) {
+				checkpointId = Math.floor(Math.random() * 10000);
+				localStorage.setItem('checkpointId', checkpointId);
+			}
+		}
 
-   var offlineData = localStorage.getItem('offlineData');
-   if (offlineData == "true") {
-	   $("#vision-select").prop("disabled", "disabled");
-	   document.getElementById("offline-switch").checked = true;
-   }
-   else {
-	   $("#vision-select").prop("disabled", false);
-	   document.getElementById("offline-switch").checked = false;	
-   }
+		$("#checkpointInput").val(checkpointId);
 
-   $("#checkpointInput").val(checkpointId);
+		// Get all comments for checkpoint
+		fetch(functionsBaseUrl + "/data/checkpoints/" + checkpointId + "/surveys")
+		.then(response => response.json())
+		.then(data => {
+			for(p=data.surveys.length-1; p>=0; p--) {
+				var survey = data.surveys[p];
+				var date = new Date(survey.timestamp);
+				var newComments = "No comment";
+				if (survey.comments) newComments = survey.comments;
+				if (survey.participants) newComments = survey.participants + " - " + newComments;
+				if (survey.satisfaction) newComments = "Rating (1-10): " + survey.satisfaction + " - " + newComments;
+				$("#passenger-comments").append(`<div style="color: white">${date.toISOString()} - ${newComments}</div>`);
+			}
+		});		
+	});
 
-   var video = document.querySelector("#videoElement");
+  var es = new EventSource('/transport/alerts/stream');
+	es.onmessage = function (event) {
+		var data = JSON.parse(event.data);
+		if (data.checkpointId == checkpointId && data.comments) {
+			var date = new Date(data.timestamp);
+			var comments = $("#passenger-comments").html();
+			var newComments = "No comment";
+			if (data.comments) newComments = data.comments;
+			if (data.participants) newComments = data.participants + " - " + newComments;
+			if (data.satisfaction) newComments = "Rating (1-10): " + data.satisfaction + " - " + newComments;
+			$("#passenger-comments").html(`<div style="color: white">${date.toISOString()} - ${newComments}</div>` + comments);
+		}
+	}
 
-   // This starts the camera and processes the frames through the vision service
-   $("#start-button").click(function() {
+	var offlineData = localStorage.getItem('offlineData');
+	if (offlineData == "true") {
+		$("#vision-select").prop("disabled", "disabled");
+		document.getElementById("offline-switch").checked = true;
+	}
+	else {
+		$("#vision-select").prop("disabled", false);
+		document.getElementById("offline-switch").checked = false;	
+	}
+
+	var video = document.querySelector("#videoElement");
+
+	$("#settings-save-button").click(function() {
+		checkpointId = $("#checkpointInput").val();
+		localStorage.setItem('checkpointId', $("#checkpointInput").val());
+	});
+
+	// This starts the camera and processes the frames through the vision service
+	$("#start-button").click(function() {
 
 	   iotRunning = !iotRunning;
 
@@ -124,12 +167,14 @@ jQuery(document).ready(function($) {
    }, 5000);
 
    // This block could be used again if a file dialog was opened to open local images (replaced with online selection)
-   // document.getElementById('inp').onchange = function(e) {
- //   var img = new Image();
- //   img.onload = draw;
- //   img.onerror = failed;
- //   img.src = URL.createObjectURL(this.files[0]);
-   // };
+   document.getElementById('inp').onchange = function(e) {
+		var img = new Image();
+		img.onload = draw;
+		img.onerror = failed;
+		img.src = URL.createObjectURL(this.files[0]);
+
+		$("#videoElement").prop("poster", img.src);
+   };
 
    // Draws the image onto the canvas, which is then sent to the vision service
    function draw() {
@@ -150,9 +195,7 @@ jQuery(document).ready(function($) {
 		var visionEngine = "cloudvision";
 		if (visionService == 1) visionEngine = "amlvision";
 
-		var url = functionsBaseUrl + '/security/vision?engine=' + visionEngine;
-		if (key != "" && key != undefined)
-			url += "&apikey=" + key;
+		var url = functionsBaseUrl + '/vision';
 
 		const img = canvas.toDataURL('image/jpeg', 0.5).split(',')[1];
 		const payload = { 
@@ -179,7 +222,7 @@ jQuery(document).ready(function($) {
 				},        
 				data: JSON.stringify(payload),
 				success: function(data) {
-					evaluateVisionResult(JSON.parse(data));		
+					evaluateVisionResult(data);		
 				}
 			});
 		}
@@ -209,16 +252,25 @@ jQuery(document).ready(function($) {
 		   $("#highAlert").fadeOut();		
 		   $("#lowAlert").fadeIn();
 		}
-		var url = functionsBaseUrl + "/security/checkpoint/" + checkpointId + "/status/" + crowd;
-		if (key != "" && key != undefined)
-			url += "?apikey=" + key;
+		var url = functionsBaseUrl + "/data/checkpoints/" + checkpointId;
 
-	   $.ajax({
-		   type: "PUT",
-		   url: url
-	   });
+		fetch(url, {
+			method: "PUT",
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({congestion: crowd})
+		});
 
-	   $("#status-label").text(labels);
+		// fetch("/transport/alerts", {
+		// 	method: "POST",
+		// 	headers: {
+		// 		'Content-Type': 'application/json'
+		// 	},				
+		// 	body: JSON.stringify({ checkpointId: checkpointId, congestion: crowd })
+		// });
+
+		$("#status-label").text(labels);
    }
 
    function getUrlVars() {
