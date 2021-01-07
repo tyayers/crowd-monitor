@@ -13,18 +13,24 @@ This solution demonstrates a best-practice solution for leveraging Google Cloud 
 | AI / ML Analytics | **Google Cloud BigQuery** | Cloud data warehouse for analytics and AI/ML predictions 
 
 ## Deploy
-You can easily deploy this solution in your GCP project by clicking this button:
+You can easily deploy this solution in your GCP project by clicking this button (launches wizard to deploy the sample Transport Manager & Airline Apps to the serverless GCP Cloud Run service):
 
 [![Run on Google Cloud](https://deploy.cloud.run/button.svg)](https://deploy.cloud.run?dir=services/transport-service)
 
-## Live Deployments
+## Sample Deployments
 
 These deployments can be tested in a sandbox environment to see how the functionalities work 
 
-* [Transport API Hub](https://emea-poc13-kaleotransport.apigee.io/) - this is the integration point for all apps & services
 * [Transport Manager App](https://transport-service-h7pi7igbcq-ey.a.run.app/apps/transport-manager/) - Live analytics of security / kiosk checkpoint data
 * [Example Airline App](https://transport-service-h7pi7igbcq-ey.a.run.app/apps/passenger-app/) - Delivers live real-time updates of congestion / other warnings directly to passengers
 * [Traveller Interaction Kiosk](https://www.signalpattern.com/patterns/apigee/airport) - Real-time customer satisfaction & survey input
+* [Transport API Hub](https://emea-poc13-kaleotransport.apigee.io/) - this is the integration point for all apps & services
+
+## Architecture
+
+The architecture is an example deployment in GCP, and can be expanded / changed as needed for any target environment.
+
+![Transport Hub Architecture Diagram](img/arch1.png)
 
 ## Feedback
 
