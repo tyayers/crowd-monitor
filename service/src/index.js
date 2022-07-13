@@ -7,8 +7,9 @@ const morgan = require('morgan');
 const fs = require("fs");
 const axios = require('axios').default;
 const https = require('https');
-
 const dotenv = require('dotenv');
+const { GoogleAuth } = require('google-auth-library');
+
 dotenv.config();
 
 // defining the Express app
@@ -16,7 +17,8 @@ const app = express();
 // adding Helmet to enhance your API's security
 app.use(helmet());
 // using bodyParser to parse JSON bodies into JS objects
-app.use(bodyParser.json());
+app.use(bodyParser({ limit: '50mb' }));
+
 // enabling CORS for all requests
 app.use(cors());
 // adding morgan to log HTTP requests
@@ -40,8 +42,26 @@ app.post('/transport/alerts', (req, res) => {
   res.send("Alert received.");
 });
 
+app.post('/vision', (req, res) => {
+  console.log("hello");
+  const auth = new GoogleAuth();
+  auth.getClient("https://vision.googleapis.com/v1p4beta1/images:annotate").then(function (client) {
+    client.request({
+      url: "https://vision.googleapis.com/v1p4beta1/images:annotate",
+      method: "POST",
+      data: req.body
+    }).then(function (response) {
+      // handle success
+      console.log(response);
+      res.send(response.data);
+    }).catch(function (error) {
+      console.log(error);
+    });
+  });
+});
+
 app.get('/', (req, res) => {
-  res.send("Service is healthy.");
+  res.redirect('/apps');
 });
 
 app.get('/health', (req, res) => {
@@ -49,7 +69,15 @@ app.get('/health', (req, res) => {
 });
 
 app.get('/parameters', (req, res) => {
-  res.send('{ "checkpointId": "' + process.env.checkpointId + '", "baseServiceUrl": "' + process.env.baseServiceUrl + '" }');
+  var result = {
+    checkpointId: "",
+    baseServiceUrl: ""
+  }
+
+  if (process.env.checkpointId) result.checkpointId = process.env.checkpointId;
+  if (process.env.baseServiceUrl) result.baseServiceUrl = process.env.baseServiceUrl;
+
+  res.send(result);
 });
 
 var port = process.env.PORT;

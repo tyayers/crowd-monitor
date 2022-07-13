@@ -17,6 +17,7 @@
     "express": "^4.17.1",
     "express-sse": "^0.5.3",
     "fs": "0.0.1-security",
+    "google-auth-library": "^8.1.0",
     "helmet": "^3.21.2",
     "morgan": "^1.9.1"
   }
