@@ -1,36 +1,50 @@
-# Google Cloud & Apigee Digital Transport Hub Solution
-Transportation hubs are in more need of digital solutions now than ever, and with the right cloud & data services connected in innovative ways can deliver next-level service and functionality in a highly competitive travel market.
+# Crowd Monitoring Example Apps on Google Cloud
 
-This solution demonstrates a best-practice solution for leveraging Google Cloud services to be the digital hub for all services, APIs and data integration in a transport hub facilities environment.
+This is a series of demo apps using [Google Cloud Vision API](https://cloud.google.com/vision) to monitor and recognize crowds in public spaces, and broadcast alerts accordingly to users who might be in transit and benefit from knowing about the current crowd dynamics.
 
-| Purpose   | Service   | Description   |
-| ---       | ---       | ---           |
-| API integration / consumption   | **Apigee API Management** | APIs are the backbone for real-time communication, synchronization & integration between systems, services & apps / clients / ecosystems
-| Web / app hosting | **Firebase / Google Cloud Run / SignalPattern** | Fast and simple serverless hosting of mobile & web clients & services
-| Additional UI / Kiosk hosting | **SignalPattern** | Powerful and easy user interface and interaction points
-| Real-Time Monitoring / Operations Data | **Google Cloud Monitor** | Unified monitoring of all metrics & events
-| AI / ML Services  | **Google AI Services**  | Real-time analysis of image, video and text data
-| AI / ML Analytics | **Google Cloud BigQuery** | Cloud data warehouse for analytics and AI/ML predictions 
+This could be useful in scenarios like:
+* Airport security checkpoints
+* Hospital waiting rooms
+* Vaccine distribution centers
+* Public sector waiting rooms such as at the DMV (Department of Motor Vehicles)
+* Amusement park ride lines
+* Entrance to events / movie theaters
+* And so many more!
+
+## Usage Guide
+
+The central app is the Public Spaces manager app, which can monitor and analyze video footage using [Google Cloud Vision API](https://cloud.google.com/vision). You can open a publicly deployed version of the app [here](https://crowds.tinyapps.cloud/apps/manager).
+
+[Crowd Monitor App](https://crowds.tinyapps.cloud/apps/manager).
+
+![Public Spaces manager app](img/manager.png)
+
+You can either click "Start Camera" to use your computer's webcam to get live video footage, or click "Select Test Image" to select from pre-loaded images to analyze. You can also upload your own images with "Load Image File". The result of the image analysis is then displayed, along with a warning if crowd congestion was detected.
+
+You can open the [passenger app (for an airline example)](https://crowds.tinyapps.cloud/apps/passenger) or the [calendar app (for a hospital example)](https://crowds.tinyapps.cloud/apps/calendar) from the header at the top of the screen. Each app should reflect the crowd status accordingly via live events.
+
+[Airline passenger app](https://crowds.tinyapps.cloud/apps/passenger)
+
+![Passenger app](img/passenger.png)
+
+[Hospital calendar app](https://crowds.tinyapps.cloud/apps/calendar)
+
+![Calendar app](img/calendar.png)
+
+## Architecture
+
+Google Cloud Run is used for easy serverless deployment of the apps, with Firestore used as simply DbaaS, and Cloud Vision API / AutoML used for image analysis of congestion patterns.
+
+![Transport Hub Architecture Diagram](img/architecture.png)
 
 ## Deploy
 You can easily deploy this solution in your GCP project by clicking this button (launches wizard to deploy the sample Transport Manager & Airline Apps to the serverless GCP Cloud Run service):
 
 [![Run on Google Cloud](https://deploy.cloud.run/button.svg)](https://deploy.cloud.run?dir=services/transport-service)
 
-## Sample Deployments
-
-These deployments can be tested in a sandbox environment to see how the functionalities work 
-
-* [Transport Manager App](https://transport-service-h7pi7igbcq-ey.a.run.app/apps/transport-manager/) - Live analytics of security / kiosk checkpoint data
-* [Example Airline App](https://transport-service-h7pi7igbcq-ey.a.run.app/apps/passenger-app/) - Delivers live real-time updates of congestion / other warnings directly to passengers
-* [Traveller Interaction Kiosk](https://www.signalpattern.com/patterns/apigee/airport) - Real-time customer satisfaction & survey input
-* [Transport API Hub](https://emea-poc13-kaleotransport.apigee.io/) - this is the integration point for all apps & services
-
-## Architecture
-
-The architecture is an example deployment in GCP, and can be expanded / changed as needed for any target environment.
-
-![Transport Hub Architecture Diagram](img/arch1.png)
+## References
+- Awesome timeline codepen: https://codepen.io/abisz/pen/qaEOEm
+- Awesome boarding pass codepen: https://codepen.io/supah/pen/eZdxXM
 
 ## Feedback
 
