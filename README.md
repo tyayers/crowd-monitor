@@ -1,10 +1,10 @@
 # Crowd Monitoring Example Apps on Google Cloud
 
-This is a series of demo apps using [Google Cloud Vision API](https://cloud.google.com/vision) to monitor and recognize crowds in public spaces, and broadcast alerts accordingly to users who might be in transit and benefit from knowing about the current crowd dynamics.
+This is a series of demo apps using [Google Cloud Serverless](https://cloud.google.com/serverless) and [Google Cloud AI](https://cloud.google.com/products/ai) services to monitor and recognize crowds in public spaces, and broadcast alerts accordingly to users who might be in transit and benefit from knowing about the current crowd dynamics.
 
 This could be useful in scenarios like:
 * Airport security checkpoints
-* Hospital waiting rooms
+* Hospital and clinic waiting rooms
 * Vaccine distribution centers
 * Public sector waiting rooms such as at the DMV (Department of Motor Vehicles)
 * Amusement park ride lines

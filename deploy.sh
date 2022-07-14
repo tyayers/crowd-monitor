@@ -1,4 +1,4 @@
-NAME=crowdmonitor
+NAME=publicspaces
 PROJECT=$(gcloud config get project)
 
 cd service
