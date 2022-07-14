@@ -31,6 +31,11 @@ You can open the [passenger app (for an airline example)](https://crowds.tinyapp
 
 ![Calendar app](img/calendar.png)
 
+## Deploy
+You can easily deploy this solution in your GCP project by clicking this button (launches wizard to deploy the sample Transport Manager & Airline Apps to the serverless GCP Cloud Run service):
+
+[![Run on Google Cloud](https://deploy.cloud.run/button.svg)](https://deploy.cloud.run?dir=service)
+
 ## Architecture
 
 The first version of the apps use Google Cloud Run to run the code (scale to 0, no costs when there's no traffic!), and the [Google Cloud Vision API](https://cloud.google.com/vision) for crowd analysis. Events are broadcast to the clients using simple Server-Side Events (no polling!).
@@ -40,11 +45,6 @@ The first version of the apps use Google Cloud Run to run the code (scale to 0, 
 Version 2 of the architecture (WiP) would scale up to use [Pub/Sub](https://cloud.google.com/pubsub) for eventing and streaming data events, and [Apigee API Management](https://cloud.google.com/apigee) to scale the API consumption and integration with 3rd party developers. Also AutoML vision could be used to tailor the crowd recognition for specialized environments / lighting / sample images.
 
 ![Architecture diagram v2](img/architecture_2.png)
-
-## Deploy
-You can easily deploy this solution in your GCP project by clicking this button (launches wizard to deploy the sample Transport Manager & Airline Apps to the serverless GCP Cloud Run service):
-
-[![Run on Google Cloud](https://deploy.cloud.run/button.svg)](https://deploy.cloud.run?dir=services/transport-service)
 
 ## References
 - Awesome timeline codepen: https://codepen.io/abisz/pen/qaEOEm
