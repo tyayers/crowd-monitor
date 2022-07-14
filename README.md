@@ -33,9 +33,13 @@ You can open the [passenger app (for an airline example)](https://crowds.tinyapp
 
 ## Architecture
 
-Google Cloud Run is used for easy serverless deployment of the apps, with Firestore used as simply DbaaS, and Cloud Vision API / AutoML used for image analysis of congestion patterns.
+The first version of the apps use Google Cloud Run to run the code (scale to 0, no costs when there's no traffic!), and the [Google Cloud Vision API](https://cloud.google.com/vision) for crowd analysis. Events are broadcast to the clients using simple Server-Side Events (no polling!).
 
-![Transport Hub Architecture Diagram](img/architecture.png)
+![Architecture diagram v1](img/architecture_1.png)
+
+Version 2 of the architecture (WiP) would scale up to use [Pub/Sub](https://cloud.google.com/pubsub) for eventing and streaming data events, and [Apigee API Management](https://cloud.google.com/apigee) to scale the API consumption and integration with 3rd party developers. Also AutoML vision could be used to tailor the crowd recognition for specialized environments / lighting / sample images.
+
+![Architecture diagram v2](img/architecture_2.png)
 
 ## Deploy
 You can easily deploy this solution in your GCP project by clicking this button (launches wizard to deploy the sample Transport Manager & Airline Apps to the serverless GCP Cloud Run service):
