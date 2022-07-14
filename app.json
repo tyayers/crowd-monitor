@@ -1,0 +1,14 @@
+{
+  "name": "crowdmonitor",
+  "options": {
+    "allow-unauthenticated": true
+  },
+  "hooks": {
+    "postbuild": {
+      "commands": [
+        "gcloud config set project $GOOGLE_CLOUD_PROJECT",
+        "gcloud services enable vision.googleapis.com"
+      ]
+    }
+  }
+}
