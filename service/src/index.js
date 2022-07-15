@@ -29,15 +29,24 @@ app.use(compression());
 const SSE = require('express-sse');
 const sse = new SSE();
 
+var lastAlerts = {};
+
 // Static test page
 app.use('/apps', express.static('public'));
 
 // REST methods
-app.get('/transport/alerts/stream', sse.init);
+app.get('/transport/alerts/stream', (req, res) => {
+  sse.init(req, res);
+  for (const [key, value] of Object.entries(lastAlerts)) {
+    if (value)
+      sse.send(value);
+  }
+});
 
 app.post('/transport/alerts', (req, res) => {
   console.log(`Received alert post request ${JSON.stringify(req.body)}`);
   req.body.timestamp = new Date().toISOString();
+  lastAlerts[req.body.checkpointId] = req.body;
   sse.send(req.body);
   res.send("Alert received.");
 });

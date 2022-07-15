@@ -11,8 +11,8 @@
       "skipFiles": [
         "<node_internals>/**"
       ],
-      "cwd": "${workspaceFolder}/services/transport-service",
-      "program": "${workspaceFolder}/services/transport-service/src/index.js"
+      "cwd": "${workspaceFolder}/service",
+      "program": "${workspaceFolder}/service/src/index.js"
     }
   ]
 }

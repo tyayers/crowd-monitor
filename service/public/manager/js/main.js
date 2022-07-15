@@ -204,7 +204,7 @@ jQuery(document).ready(function ($) {
     const img = canvas.toDataURL('image/jpeg', 0.5).split(',')[1];
     const payload = {
       "requests": [
-        { "image": { "content": img }, "features": [{ "type": "LABEL_DETECTION" }] }
+        { "image": { "content": img }, "features": [{ "type": "OBJECT_LOCALIZATION" }] }
       ]
     };
 
@@ -237,17 +237,25 @@ jQuery(document).ready(function ($) {
     var crowd = "low";
     var labels = "";
 
-    for (var i in data.responses[0]["labelAnnotations"]) {
-      var annotation = data.responses[0]["labelAnnotations"][i];
+    var peopleCount = 0;
+
+    for (var i in data.responses[0]["localizedObjectAnnotations"]) {
+      var annotation = data.responses[0]["localizedObjectAnnotations"][i];
 
       if (i > 0)
         labels += ", "
-      labels += annotation.description + ": " + annotation.score;
+      labels += annotation.name + ": " + annotation.score;
 
-      if (annotation.description.toUpperCase() == "CROWD") {
+      if (annotation.name.toUpperCase() == "CROWD") {
         crowd = "high";
       }
+      else if (annotation.name.toUpperCase() == "PERSON") {
+        peopleCount++;
+      }
     }
+
+    if (peopleCount >= 5)
+      crowd = "high";
 
     if (crowd == "high") {
       $("#lowAlert").fadeOut();

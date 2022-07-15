@@ -3,6 +3,7 @@
 <head>
   <title>Calendar</title>
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/push.js/0.0.11/push.min.js"></script>
 </head>
 
 <body>
@@ -45,10 +46,11 @@
           <div class="desc">
             <h3>Hospital Check-up</h3>
             <h4>304 S. Walnut Ave.</h4>
-            <div>
+            <div style="margin-bottom: 0px;">
               <h4 style="color: green">🚗 Average traffic</h4>
-              <br>
-              <h4 style="color: red">⏱ Expect longer wait times</h4>
+              <div id="waitText" style="display: none; margin-bottom: 0px;">
+                <h4 style="color: red;">⏱ Expect longer wait times</h4>
+              </div>
             </div>
             <!-- <div class="people">
               <img src="https://s3.amazonaws.com/uifaces/faces/twitter/ashleyford/128.jpg" alt="" />
@@ -75,6 +77,9 @@
       </ul>
     </div>
   </div>
+
+  <script src="js/jquery-3.3.1.min.js"></script>
+  <script src="./js/main.js"></script>
 </body>
 
 </html>
