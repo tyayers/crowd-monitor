@@ -33,7 +33,7 @@ jQuery(document).ready(function ($) {
       }
       else {
         checkpointId = localStorage.getItem('checkpointId');
-        if (!checkpointId) {
+        if (!checkpointId || checkpointId == "undefined") {
           checkpointId = Math.floor(Math.random() * 10000);
           localStorage.setItem('checkpointId', checkpointId);
         }
@@ -94,8 +94,8 @@ jQuery(document).ready(function ($) {
     iotRunning = !iotRunning;
 
     if (iotRunning) {
-      $("#canvas").hide();
-      $("#videoElement").show();
+      // $("#canvas").hide();
+      // $("#videoElement").show();
       imageType = "CAMERA";
       if (navigator.mediaDevices.getUserMedia) {
         navigator.mediaDevices.getUserMedia({ video: true })
@@ -116,8 +116,8 @@ jQuery(document).ready(function ($) {
           val.stop();
         });
       }
-      $("#canvas").show();
-      $("#videoElement").hide();
+      // $("#canvas").show();
+      // $("#videoElement").hide();
 
       $("#start-button").text("Start Camera")
     }
@@ -147,7 +147,7 @@ jQuery(document).ready(function ($) {
       imageType = "LOW";
 
     $('#pictures-modal').modal('hide')
-    $("#videoElement").prop("poster", imageSrc)
+    //$("#videoElement").prop("poster", imageSrc)
 
     var img = new Image();
     img.onload = draw;
@@ -204,7 +204,7 @@ jQuery(document).ready(function ($) {
     const img = canvas.toDataURL('image/jpeg', 0.5).split(',')[1];
     const payload = {
       "requests": [
-        { "image": { "content": img }, "features": [{ "type": "OBJECT_LOCALIZATION" }] }
+        { "image": { "content": img }, "features": [{ "maxResults": 50, "type": "OBJECT_LOCALIZATION" }] }
       ]
     };
 
@@ -238,6 +238,8 @@ jQuery(document).ready(function ($) {
     var labels = "";
 
     var peopleCount = 0;
+    var canvas = document.getElementById('canvas');
+    var ctx = canvas.getContext('2d');
 
     for (var i in data.responses[0]["localizedObjectAnnotations"]) {
       var annotation = data.responses[0]["localizedObjectAnnotations"][i];
@@ -251,6 +253,18 @@ jQuery(document).ready(function ($) {
       }
       else if (annotation.name.toUpperCase() == "PERSON") {
         peopleCount++;
+
+        // Red rectangle
+        var x = annotation.boundingPoly.normalizedVertices[0].x * canvas.width;
+        var y = annotation.boundingPoly.normalizedVertices[0].y * canvas.height;
+        var width = (annotation.boundingPoly.normalizedVertices[1].x * canvas.width) - x;
+        var height = (annotation.boundingPoly.normalizedVertices[3].y * canvas.height) - y
+        ctx.beginPath();
+        ctx.lineWidth = "4";
+        // ctx.strokeStyle = "#f16821";
+        ctx.strokeStyle = "lightgreen";
+        ctx.rect(x, y, width, height);
+        ctx.stroke();
       }
     }
 
@@ -622,6 +636,7 @@ jQuery(document).ready(function ($) {
       // alert('yay');
     })
   };
+
   OnePageNavigation();
 
 });
