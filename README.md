@@ -13,9 +13,11 @@ This could be useful in scenarios like:
 
 ## Usage Guide
 
-The central app is the Public Spaces manager app, which can monitor and analyze video footage using [Google Cloud Vision API](https://cloud.google.com/vision). You can open a publicly deployed version of the app [here](https://crowds.tinyapps.cloud/apps/manager).
+The central app is the Public Spaces manager app, which can monitor and analyze video footage using [Google Cloud Vision API](https://cloud.google.com/vision). You can open a publicly deployed version of the apps [here](https://publicspaces-utbzvczbya-ew.a.run.app/).
 
-[Crowd Monitor App](https://crowds.tinyapps.cloud/apps/manager).
+[Crowd Monitor Apps](https://publicspaces-utbzvczbya-ew.a.run.app/).
+
+The link above takes you to the menu of apps - click on **Manager** to open the Manager app to monitor congestion, as well as the **Passenger** app to get alerts broadcast when congestion is detected.
 
 ![Public Spaces manager app](img/manager.png)
 
@@ -34,7 +36,7 @@ You can open the [passenger app (for an airline example)](https://crowds.tinyapp
 ## Deploy
 You can easily deploy this solution in your GCP project by clicking this button (launches wizard to deploy the sample Transport Manager & Airline Apps to the serverless GCP Cloud Run service):
 
-[![Run on Google Cloud](https://deploy.cloud.run/button.svg)](https://deploy.cloud.run?dir=service)
+[![Run on Google Cloud](https://deploy.cloud.run/button.svg)](https://deploy.cloud.run)
 
 ## Architecture
 

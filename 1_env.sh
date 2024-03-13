@@ -1,0 +1,3 @@
+export NAME=publicspaces
+export PROJECT_ID=YOUR_PROJECT_ID
+export REGION=YOUR_REGION
