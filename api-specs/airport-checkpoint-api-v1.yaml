@@ -1,0 +1,402 @@
+openapi: 3.0.0
+info:
+  title: Airport Security Queue Management API
+  description: >-
+    This API provides functionality to manage airport security queues, allowing
+    users to create, retrieve, update, and delete security queues, as well as
+    add, remove, and modify passengers in the queues.
+  version: 1.0.0
+servers:
+  - url: https://api.34-110-134-67.nip.io/transportation-monitor
+security:
+  - ApiKeyAuth: []
+paths:
+  /queues:
+    get:
+      description: Retrieve a list of all security queues.
+      operationId: getQueues
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Queue'
+                type: array
+          description: A list of security queues.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: An unexpected error occurred.
+      tags:
+        - queues
+    post:
+      description: Creates a new security queue with the provided details.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Queue'
+        description: The details of the new security queue.
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Queue'
+          description: The security queue was created successfully.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: The request was invalid.
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: An internal server error occurred.
+      summary: Create a new security queue.
+      tags:
+        - queues
+  /queues/{queueId}:
+    delete:
+      description: Deletes a specific security queue by its unique identifier.
+      operationId: deleteQueue
+      responses:
+        '204':
+          description: The security queue was deleted successfully.
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: >-
+            The security queue with the specified unique identifier does not
+            exist.
+      summary: Delete a specific security queue.
+      tags:
+        - queues
+    get:
+      description: This operation retrieves the details of a specific security queue.
+      operationId: getQueueById
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Queue'
+          description: Successful operation.
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Queue not found.
+      summary: Retrieve the details of a specific security queue.
+      tags:
+        - queues
+    parameters:
+      - description: The unique identifier of the security queue.
+        in: path
+        name: queueId
+        required: true
+        schema:
+          type: string
+    put:
+      description: >-
+        This operation allows you to update the details of a specific security
+        queue.
+      operationId: updateQueue
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Queue'
+        description: The updated details of the security queue.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Queue'
+          description: The updated security queue details.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad request.
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: The specified security queue does not exist.
+      summary: Update the details of a specific security queue.
+      tags:
+        - queues
+  /queues/{queueId}/passengers:
+    get:
+      description: Retrieve a list of all passengers in a specific security queue.
+      operationId: getQueuesQueueIdPassengers
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Passenger'
+                type: array
+          description: A list of passengers in the security queue.
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: The specified security queue does not exist.
+      tags:
+        - queues
+    parameters:
+      - description: The unique identifier of the security queue.
+        in: path
+        name: queueId
+        required: true
+        schema:
+          type: string
+    post:
+      description: Adds a new passenger to a specific security queue.
+      operationId: addPassengerToQueue
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Passenger'
+        description: The passenger to be added to the security queue.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Passenger'
+          description: The passenger was successfully added to the security queue.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: The request was invalid.
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: The security queue was not found.
+      summary: Add a new passenger to a specific security queue.
+      tags:
+        - queues
+  /queues/{queueId}/passengers/{passengerId}:
+    delete:
+      operationId: deleteQueuesQueueIdPassengersPassengerId
+      parameters:
+        - in: path
+          name: passengerId
+          required: true
+          schema:
+            $ref: '#/components/schemas/Passenger/properties/passengerId'
+      responses:
+        '200':
+          description: Passenger deleted successfully.
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Passenger not found.
+      summary: Remove a specific passenger from a specific security queue.
+      tags:
+        - queues
+    get:
+      description: >-
+        This operation retrieves the details of a specific passenger in a
+        specific security queue.
+      operationId: getQueuesQueueIdPassengersPassengerId
+      parameters:
+        - description: The unique identifier of the passenger.
+          in: path
+          name: passengerId
+          required: true
+          schema:
+            $ref: '#/components/schemas/Passenger/properties/passengerId'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Passenger'
+          description: Successful operation.
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Passenger not found.
+      summary: >-
+        Retrieve the details of a specific passenger in a specific security
+        queue.
+      tags:
+        - queues
+    parameters:
+      - description: The unique identifier of the security queue that the passenger is in.
+        in: path
+        name: queueId
+        required: true
+        schema:
+          $ref: '#/components/schemas/Queue/properties/queueId'
+      - description: The unique identifier of the passenger.
+        in: path
+        name: passengerId
+        required: true
+        schema:
+          $ref: '#/components/schemas/Passenger/properties/passengerId'
+    put:
+      operationId: updatePassenger
+      parameters:
+        - description: The unique identifier of the passenger.
+          in: path
+          name: passengerId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Passenger'
+        description: The updated details of the passenger.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Passenger'
+          description: The updated passenger details.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad request.
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: The specified queue or passenger does not exist.
+      summary: Update the details of a specific passenger in a specific security queue.
+      tags:
+        - queues
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      name: apikey
+      in: query
+  schemas:
+    Error:
+      description: An error object containing a human-readable description of the error.
+      properties:
+        errorMessage:
+          description: A human-readable description of the error.
+          type: string
+      type: object
+    Passenger:
+      description: A passenger in a security queue.
+      properties:
+        name:
+          description: The name of the passenger.
+          type: string
+        nationality:
+          description: The nationality of the passenger.
+          type: string
+        passportNumber:
+          description: The passport number of the passenger.
+          type: string
+        queueId:
+          description: >-
+            The unique identifier of the security queue that the passenger is
+            in.
+          type: string
+      type: object
+    Passenger/properties/passengerId:
+      Passenger:
+        description: A passenger in a security queue.
+        properties:
+          name:
+            description: The name of the passenger.
+            type: string
+          nationality:
+            description: The nationality of the passenger.
+            type: string
+          passengerId:
+            description: The unique identifier of the passenger.
+            type: string
+          passportNumber:
+            description: The passport number of the passenger.
+            type: string
+          queueId:
+            description: >-
+              The unique identifier of the security queue that the passenger is
+              in.
+            type: string
+        type: object
+    Queue:
+      description: A security queue at an airport.
+      properties:
+        capacity:
+          description: >-
+            The maximum number of passengers that can be in the security queue
+            at once.
+          type: integer
+        description:
+          description: A description of the security queue.
+          type: string
+        location:
+          description: The location of the security queue.
+          type: string
+        name:
+          description: The name of the security queue.
+          type: string
+        queueId:
+          description: The unique identifier of the security queue.
+          type: string
+      type: object
+    Queue/properties/queueId:
+      Queue:
+        properties:
+          capacity:
+            description: >-
+              The maximum number of passengers that can be in the security queue
+              at once.
+            type: integer
+          description:
+            description: A description of the security queue.
+            type: string
+          location:
+            description: The location of the security queue.
+            type: string
+          name:
+            description: The name of the security queue.
+            type: string
+          queueId:
+            description: The unique identifier of the security queue.
+            format: uuid
+            type: string
+        type: object
