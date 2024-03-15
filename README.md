@@ -23,13 +23,13 @@ The link above takes you to the menu of apps - click on **Manager** to open the 
 
 You can either click "Start Camera" to use your computer's webcam to get live video footage, or click "Select Test Image" to select from pre-loaded images to analyze. You can also upload your own images with "Load Image File". The result of the image analysis is then displayed, along with a warning if crowd congestion was detected.
 
-You can open the [passenger app (for an airline example)](https://crowds.tinyapps.cloud/apps/passenger) or the [calendar app (for a hospital example)](https://crowds.tinyapps.cloud/apps/calendar) from the header at the top of the screen. Each app should reflect the crowd status accordingly via live events.
+You can open the [passenger app (for an airline example)](https://publicspaces-utbzvczbya-ew.a.run.app/apps/passenger) or the [calendar app (for a hospital example)](https://publicspaces-utbzvczbya-ew.a.run.app/apps/calendar) from the header at the top of the screen. Each app should reflect the crowd status accordingly via live events.
 
-[Airline passenger app](https://crowds.tinyapps.cloud/apps/passenger)
+[Airline passenger app](https://publicspaces-utbzvczbya-ew.a.run.app/apps/passenger)
 
 ![Passenger app](img/passenger.png)
 
-[Hospital calendar app](https://crowds.tinyapps.cloud/apps/calendar)
+[Hospital calendar app](https://publicspaces-utbzvczbya-ew.a.run.app/apps/calendar)
 
 ![Calendar app](img/calendar.png)
 
